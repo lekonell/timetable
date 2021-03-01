@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>timeTable</title>
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                overflow: hidden;
+                font-size: 14px;
+            }
+
+            .displaynone {
+                display: none;
+            }
+
+            section {
+                position: relative;
+                width: 100%;
+                float: left;
+            }
+
+            section#top {
+                max-height: 40px;
+                height: 40px;
+            }
+
+            section#top div.summary {
+                padding: 4px 4px;
+            }
+
+            section#top div.summary span.tableName {
+                font-size: 20px;
+                font-weight: bold;
+            }
+            
+            section#top div.menu {
+                position: absolute;
+                max-height: 28px;
+                line-height: 28px;
+                right: 4px;
+                bottom: 4px;
+            }
+
+            section#top div.menu span.objectWrapper {
+                position: relative;
+                display: inline-block;
+                width: 28px;
+                height: 28px;
+                padding: 4px 4px;
+                line-height: 20px;
+                border-radius: 100%;
+                background-color: rgba(255, 255, 255, 0);
+            }
+
+            section#top div.menu span.objectWrapper:hover {
+                background-color: #cfe3ff;
+            }
+
+            section#top div.menu span.objectWrapper img {
+                width: 20px;
+                height: 20px;
+            }
+
+            section#top div.menu object {
+                position: relative;
+                width: 16px;
+                height: 16px;
+            }
+
+            section#main {
+                min-height: 240px;
+            }
+
+            section#main div#timetable {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                height: 480px;
+            }
+
+            section#main div#timetable div.day {
+                position: absolute;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: center;
+                background-color: rgba(240, 240, 240, 0);
+                left: 24px;
+                width: calc(100vw - 24px);
+                height: 20px;
+                overflow: visible !important;
+            }
+
+            section#main div#timetable div.day div.element:first-child {
+                flex-grow: 1;
+                text-align: center;
+                background-color: rgba(240, 240, 240, 0);
+                border-left: 1px solid #dedede;
+            }
+
+            section#main div#timetable div.day div.element {
+                position: relative;
+                height: 20px;
+                flex-grow: 1;
+                text-align: center;
+                background-color: rgba(240, 240, 240, 0);
+                border-right: 1px solid #dedede;
+                border-top: 1px solid #dedede;
+                border-bottom: 1px solid #dedede;
+                overflow: visible !important;
+            }
+            
+            section#main div#timetable div.day div.element div.line {
+                position: absolute;
+                width: 1px;
+                height: calc(480px - 20px);
+                right: -1px;
+                top: 0px;
+                background-color: #dedede;
+            }
+
+            section#main div#timetable div.timeline {
+                position: absolute;
+                display: inline-block;
+                background-color: rgba(240, 240, 240, 0);
+                left: 0px;
+                top: 20px;
+                width: 24px;
+                height: calc(100vh - 44px);
+                text-align: right;
+                overflow: visible !important
+            }
+            
+            section#main div#timetable div.timeline div.timeelement.first {
+                border-top: 1px solid #dedede;
+            }
+            
+            section#main div#timetable div.timeline div.timeelement {
+                position: relative;
+                height: 80px;
+                border-right: 1px solid #dedede;
+                border-bottom: 1px solid #dedede;
+                overflow: visible !important
+            }
+            
+            section#main div#timetable div.timeline div.timeelement div.line {
+                position: absolute;
+                width: calc(100vw - 24px);
+                left: 24px;
+                height: 1px;
+                bottom: -1px;
+                background-color: #dedede;
+            }
+
+            section#main div#timetable div.subject {
+                position: relative;
+                display: inline-block;
+                background-color: rgba(255, 255, 255, 0);
+                margin-top: 20px;
+                margin-left: 24px;
+            }
+
+            section#main div#timetable div.element {
+                width: calc((100vw - 24px) / 5);
+                height: 80px;
+                line-height: 16px;
+                float: left;
+            }
+
+            section#main div#timetable div.element span.eClassName {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            section#main div#timetable div.element.colorA {
+                background-color: #2cbbff;
+            }
+
+            html, body {
+                background: rgba(255, 255, 255, 0);
+            }
+        </style>
+    </head>
+    <body>
+        <section id="top">
+            <div class="summary">
+                <span class="tableName">2021-1</span>
+            </div>
+            <div class="menu">
+                <span class="objectWrapper"><img class="oList" src="img/list.svg"></span>
+                <span class="objectWrapper"><img class="oSetting" src="img/setting.svg"></span>
+            </div>
+        </section>
+        <section id="main">
+            <!-- -->
+            <div id="timetable">
+                <div class="day">
+                    <div class="element"><div class="line"></div>월</div>
+                    <div class="element"><div class="line"></div>화</div>
+                    <div class="element"><div class="line"></div>수</div>
+                    <div class="element"><div class="line"></div>목</div>
+                    <div class="element"><div class="line"></div>금</div>
+                </div>
+                <div class="timeline">
+                    <div class="timeelement" optional="true"><div class="line"></div>1</div>
+                    <div class="timeelement" optional="true"><div class="line"></div>2</div>
+                    <div class="timeelement" optional="true"><div class="line"></div>3</div>
+                    <div class="timeelement" optional="true"><div class="line"></div>4</div>
+                    <div class="timeelement" optional="true"><div class="line"></div>5</div>
+                    <div class="timeelement" optional="true"><div class="line"></div>6</div>
+                    <div class="timeelement" optional="true"><div class="line"></div>7</div>
+                    <div class="timeelement" optional="true"><div class="line"></div>8</div>
+                    <div class="timeelement"><div class="line"></div>9</div>
+                    <div class="timeelement"><div class="line"></div>10</div>
+                    <div class="timeelement"><div class="line"></div>11</div>
+                    <div class="timeelement"><div class="line"></div>12</div>
+                    <div class="timeelement" afternoon="true"><div class="line"></div>1</div>
+                    <div class="timeelement" afternoon="true"><div class="line"></div>2</div>
+                    <div class="timeelement" afternoon="true"><div class="line"></div>3</div>
+                    <div class="timeelement" afternoon="true"><div class="line"></div>4</div>
+                    <div class="timeelement" afternoon="true"><div class="line"></div>5</div>
+                    <div class="timeelement" afternoon="true"><div class="line"></div>6</div>
+                    <div class="timeelement" afternoon="true" optional="true"><div class="line"></div>7</div>
+                    <div class="timeelement" afternoon="true" optional="true"><div class="line"></div>8</div>
+                    <div class="timeelement" afternoon="true" optional="true"><div class="line"></div>9</div>
+                    <div class="timeelement" afternoon="true" optional="true"><div class="line"></div>10</div>
+                    <div class="timeelement" afternoon="true" optional="true"><div class="line"></div>11</div>
+                    <div class="timeelement" afternoon="true" optional="true"><div class="line"></div>12</div>
+                </div>
+                <div class="subject">
+                    <div class="element colorA">
+                        <span class="eClassName">강의명</span>
+                        <span class="eProfessor">교수</span>
+                        <span class="ePlace">강의실</span>
+                        <span class="eCode">강의코드</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script type="text/javascript">
+            window.$ = window.jQuery = require('jquery');
+            $(document).ready(function() {
+                var firstTimeElement = false;
+                $("div.timeline div.timeelement").each(function() {
+                    if ($(this).attr("optional") == "true") {
+                        $(this).addClass("displaynone");
+                    }
+                    else {
+                        if (!firstTimeElement) {
+                            firstTimeElement = true;
+                            $(this).addClass("first");
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
